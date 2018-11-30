@@ -350,6 +350,7 @@ class MyoRaw(object):
 
     def write_attr(self, attr, val):
         if self.conn is not None:
+            print(self.conn)
             self.bt.write_attr(self.conn, attr, val)
 
     def read_attr(self, attr):
@@ -380,9 +381,10 @@ class MyoRaw(object):
         '''Bytes sent to handle 0x19 (command characteristic) have the following
         format: [command, payload_size, EMG mode, IMU mode, classifier mode]
         According to the Myo BLE specification, the commands are:
+        Reference: https://github.com/thalmiclabs/myo-bluetooth.git
             0x01 -> set EMG and IMU
             0x03 -> 3 bytes of payload
-            0x02 -> send 50Hz filtered signals
+            0x03 -> send raw (unfiltered) EMG data (0x02 -> send filtered signals)
             0x01 -> send IMU data streams
             0x01 -> send classifier events
         '''
